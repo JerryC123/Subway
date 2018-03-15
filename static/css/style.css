@@ -1,0 +1,125 @@
+html, body {
+    font: 10pt arial;
+  }
+  #mynetwork {
+    width: 600px;
+    height: 600px;
+    border: 1px solid lightgray;
+  }
+  #mytable td{
+      padding:10px 18px
+  }
+  #mytable tbody tr .tname:hover  {
+  background-color: #0180FE;
+  color: #fff;
+  cursor:pointer;
+  }
+  .dataTable tr:hover td {background:none;}
+  em{
+      color:red;
+  }
+  .socialbar {
+      padding: 15px 0;
+      text-align: center;
+      background-color: #f5f5f5;
+      border-top: 1px solid #fff;
+      border-bottom: 1px solid #eeeeee;
+  }
+  
+  div.menu{
+      width:100%;
+  }
+  div.menu ul  
+  {  
+      list-style:none; /* 去掉ul前面的符号 */  
+      margin: 0px; /* 与外界元素的距离为0 */  
+      padding: 0px; /* 与内部元素的距离为0 */  
+      width: auto; /* 宽度根据元素内容调整 */  
+  }  
+  /* 所有class为menu的div中的ul中的li样式 */  
+  div.menu ul li  
+  {  
+      float:left; /* 向左漂移，将竖排变为横排 */
+      font-size:22px;  
+      width:33%;
+      text-align: center;
+  }  
+  /* 所有class为menu的div中的ul中的a样式(包括尚未点击的和点击过的样式) */  
+  div.menu ul li a, div.menu ul li a:visited  
+  {  
+      /*background-color: #465c71;*/ /* 背景色 */  
+      /*border: 1px #4e667d solid; *//* 边框 */  
+      color: #000000; /* 文字颜色 */  
+      display: block; /* 此元素将显示为块级元素，此元素前后会带有换行符 */  
+      line-height: 1.35em; /* 行高 */  
+      padding: 4px 20px; /* 内部填充的距离 */  
+      text-decoration: none; /* 不显示超链接下划线 */  
+      white-space: nowrap; /* 对于文本内的空白处，不会换行，文本会在在同一行上继续，直到遇到 <br> 标签为止。 */
+      border-bottom: 1px #cdcaca solid;  
+  }  
+  /* 所有class为menu的div中的ul中的a样式(鼠标移动到元素中的样式) */  
+  div.menu ul li a:hover  
+  {  
+      /*background-color: #bfcbd6;*/ /* 背景色 */  
+      color: orangered; /* 文字颜色 */  
+      border-bottom: 4px orangered solid;
+      text-decoration: none; /* 不显示超链接下划线 */  
+  }  
+  /* 所有class为menu的div中的ul中的a样式(鼠标点击元素时的样式) */  
+  div.menu ul li a:active  
+  {  
+      /*background-color: #465c71;*/ /* 背景色 */  
+      /*color: #cfdbe6; *//* 文字颜色 */  
+      text-decoration: none; /* 不显示超链接下划线 */  
+  }  
+  .subway_line{
+      float:left;
+  }
+  .solution_info{
+      margin-top:20px;
+  }
+  .solution_detail{
+      padding:10px 0;
+  }
+  .tiny_down{
+      color:red;
+      cursor:pointer;
+  }
+  .subway_line_name{
+      font-size:25px;
+      padding-bottom:7px;
+      border-bottom:1px white solid;
+      padding-top:10px;
+  }
+  .subway_line_detail{
+      padding-top:10px;
+  }
+  .station_normal{
+      color:#a2a5a7;
+      margin-top:5px;
+  }
+  .station_end{
+      margin-top:10px;
+  }
+  .station_end_name{
+      color:#000000;
+      margin-right:5px;
+  }
+  .station_start_name{
+      color:#000000;
+      margin-right: 5px;
+  }
+  .row{
+      margin-left:0px;
+      margin-right:0px;
+  }
+  .total_num{
+      margin-left:80%;
+      color:#1fbbf2
+  }
+  .solution_detail{
+      background-color: #e6eff6;
+  }
+  .tab_a:hover{
+      cursor:pointer;
+  }

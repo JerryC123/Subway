@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html ng-app="bjsubway">
+<head>
+    <title>北京地铁查询</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <script type="text/javascript" src="static/js/jquery-3.2.1.min.js"></script>
+    <!--script type="text/javascript" src="static/dist/vis.js"></script-->
+    <script type="text/javascript" src="static/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+
+    <script type="text/javascript" src="static/bootstrap-3.3.7-dist/js/bootstrap.js"> </script>
+    <script type="text/javascript" src="static/js/angular.js"></script>
+    <!--script type="text/javascript" src="static/js/bootstrap-slider.js"></script>
+    <script type="text/javascript" src="static/js/jquery.dataTables.min.js"></script>
+    <link  href="static/dist/vis-network.min.css" rel="stylesheet" type="text/css" /-->
+    <link  href="static/bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet">
+    <link  href="static/bootstrap-3.3.7-dist/css/bootstrap-theme.css" rel="stylesheet">
+    <!--link  href="static/css/slider.css" rel="stylesheet">
+    <link  href="static/css/jquery.dataTables.min.css" rel="stylesheet"-->
+    <link href="static/css/style.css" rel="stylesheet">
+</head>
+
+<body ng-app="bjsubway" ng-controller="subway">
+    <div class="row" ng-init="ab='John'">
+        <div class="socialbar">
+            <div class="row" style="background-color: #f5f5f5">
+                <div class="col-md-12">
+                    软件工程 |
+                    <a href="http://118.89.233.180:1241">北京地铁查询</a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="row" style="padding-top:20px;">
+                    <form ng-submit="submitForm()">
+                        <div class="col-md-9">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <label class="col-md-3 control-label">起始站</label>
+                                        <div class="col-md-8">
+                                            <input type='text' class='form-control' id="from"  name="from" placeholder="人民大学" ng-model="form_data.from">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <label class="col-md-3 control-label">终点站</label>
+                                        <div class="col-md-8">
+                                            <input type='text' class='form-control' id="to"  name="to" placeholder="望京" ng-model="form_data.to">
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-danger" type="submit" style="margin-top:30px">查询</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="menu">
+                            <ul>
+                                <li><a ng-click="get1();" class="tab_a">最少站点</a></li>
+                                <li><a ng-click="get2();" class="tab_a">最短距离</a></li>
+                                <li><a ng-click="get3();" class="tab_a">最少换乘</a></li>
+                             </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="row solution">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                    <div class="subway_line" ng-repeat="r in data.route">
+                                        <image src="static/img/tiny_subway.png"/>
+                                        [[r.line]]
+                                        <image src="static/img/to.png" />
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="row solution_info">
+                            <div class="col-md-11 col-sm-11">
+                                途经[[ data.station_num ]]个站点&nbsp|&nbsp共换乘[[ data.trans_num ]]次&nbsp|&nbsp全程[[ data.total_distance ]]米
+                            </div>
+                            <div class="col-md-1 col-sm-1">
+                                <image src="static/img/down.png" class="tiny_down" ng-show="!detail_show" ng-click="change_detail()"></image>
+                                <image src="static/img/up.png" class="tiny_down" ng-show="detail_show" ng-click="change_detail()"></image>
+                            </div>
+                        </div>
+                        <div class="row" ng-show="detail_show">
+                            <div class="row" ng-repeat="r in data.route">
+                                <input type="hidden" value="[[ r.line ]]"/>
+                                <div class="row solution_detail" ng-style="{'background-color': r.color}">
+                                    <div class="col-md-12">
+                                        <div class="row subway_line_name">
+                                                [[ r.line ]]
+                                        </div>
+                                        <div class="row subway_line_detail">
+                                            <div class="row station_start"><span class="station_start_name">[[ r.start ]]</span>上车</div>
+
+                                            <!--div class="row station_normal">北京站</div-->
+                                            <div class="row station_normal" ng-repeat="s in r.station">[[ s ]]</div>
+
+                                            <div class="row station_end">
+                                                <span class="station_end_name">[[ r.end ]]</span>下车
+                                                <span class="total_num"> 共[[ r.station_num ]]站</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    </div>
+
+    <script>
+
+        var App = angular.module('bjsubway', []);
+        App.config(function($interpolateProvider) {
+          $interpolateProvider.startSymbol('[[');
+          $interpolateProvider.endSymbol(']]');
+        });
+        App.controller("subway", function($scope, $http) {
+            //console.log("e")
+
+            $scope.data = {}
+            $scope.a = ['1','2','3','4']
+            $scope.ab = 1
+            $scope.submitForm = function() {
+                $http({
+                        method: 'POST',
+                        url: '/get_result',
+                        data: $.param($scope.form_data),
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        }
+                    })
+                    .success(function(data) {
+                        $scope.data = data['gls']
+                        $scope.gls = data['gls']
+                        $scope.glt = data['glt']
+                        $scope.gsd = data['gsd']
+                        //$scope.num =  data['data']['trans_num']
+                        //console.log(data['data'])
+                        //$scope.onload=false;
+                        //console.log($scope.data.station_num)
+                        //console.log(data['data']['route'][0]['line'])
+                    });
+            };
+
+            $scope.change_detail = function(){
+                $scope.detail_show = !$scope.detail_show;
+                //console.log("1")
+                console.log($scope)
+            }
+            $scope.get1 = function(){
+                console.log("1");
+                $scope.data = $scope.gls
+            }
+            $scope.get2 = function(){
+                $scope.data = $scope.gsd
+            }
+            $scope.get3 = function(){
+                $scope.data = $scope.glt
+            }
+
+        });
+
+        $(document).ready(function(){
+            $(".solution_detail").each(function(){
+
+            console.log("in!");
+                var color_dict = {'地铁一号线':'#fbebea','地铁二号线':'#e6eff6','地铁四号线':'#dff5f2','地铁十号线':'#e3f3f6',
+                '地铁五号线':'#f8eaf3','地铁六号线':'#fbf1df','地铁七号线':'#f4eee7','地铁八号线':'#e4f4e5','地铁九号线':'#edf3e0'
+                ,'地铁13号线':'#f5ecde', '地铁14号线(东)':'#f4eceb','地铁14号线(西)':'#f4eceb','地铁15号线':'#edeaf3','地铁16号线':'#e7eeea','地铁八通线':'#fbebea',
+                '地铁昌平线':'#f3edf0','地铁亦庄线':'#fae7eb','地铁房山线':'#f9ece3','机场线':'#f3f0f4'}
+                console.log($(this).prev().val())
+                $(this).css('background-color',color_dict[$(this).prev().val()])
+            })
+        })
+    </script>
+</body>
+</html>

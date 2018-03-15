@@ -1,8 +1,7 @@
-#-*- encoding=utf-8 -*-
+# -*- coding: utf-8 -*-
 
 import os
-import json
-
+from settings import *
 Subway_Map = {}
 name_to_id = {}
 id_to_name = {}
@@ -100,7 +99,7 @@ def create_data(path):
                 line_union = set(id_to_line[path[i - 1]]).intersection(set(id_to_line[path[i]]))
                 line_name.append(list(line_union)[0])
 
-    trans_num = len(set(line_name)) - 1
+    trans_num = len(set(line_name))
 
     route = []
     start = 0
@@ -111,7 +110,7 @@ def create_data(path):
             route_data = {}
             route_data['line'] = line_name[i - 1]
             route_data['start'] = path_name[start]
-            route_data['station'] = path_name[start + 1:end]
+            route_data['station'] = path_name[start:end + 1]
             route_data['end'] = path_name[end]
             route.append(route_data)
             start = end
@@ -128,18 +127,18 @@ def create_data(path):
     data['station_num'] = station_num
     data['trans_num'] = trans_num
     data['total_distance'] = total_distance
-    print(data)
+    print data
     return data
 
 def create_map():
-    data_dir = "data"
+    data_dir = (STATIC_ROOT.split("collectstatic")[0]+"static/data")
     files = os.listdir(data_dir)
 
     station_num = -1
 
     for file in files:
-        #file_name = file.decode('gbk').encode('utf-8')
-        f = open('data/' + file, 'r')
+
+        f = open(STATIC_ROOT.split("collectstatic")[0]+"static/data/"+file, 'r')
         line = f.readline()[:-1]
         line_data = line.split('\t')
         station = line_data[0].split('——')
@@ -203,30 +202,77 @@ def create_map():
     print "______________________"
     '''
 
-if __name__ == '__main__':
+def get_shortest_distance(start_name,end_name):
     create_map()
     #for i in range(len(id_to_line)):
     #    print i,id_to_line[i]
     #exit()
-
+    '''
     start_name = raw_input("起始站: ")
     #start_name = "人民大学"
     while start_name not in name_to_id:
-        #print "起始站不存在，请重新输入"
+        print "起始站不存在，请重新输入"
         start_name = raw_input("起始站: ")
 
     end_name = raw_input("终点站: ")
     #end_name = "北京站"
     while end_name not in name_to_id:
-        #print "终点站不存在，请重新输入"
+        print "终点站不存在，请重新输入"
         end_name = raw_input("终点站: ")
 
     #print "----------最短距离----------"
-    dijkstra(start_name, end_name, 1)
-    # ""
-    #print "----------最少站点----------"
+    '''
+    return dijkstra(start_name, end_name, 1)
+    '''
+    print ""
+    print "----------最少站点----------"
     dijkstra(start_name, end_name, 2)
-    #print ""
-    #print "----------最少换乘----------"
+    print ""
+    print "----------最少换乘----------"
     dijkstra(start_name, end_name, 3)
+    '''
+
+def get_least_station(start_name,end_name):
+    create_map()
+    # for i in range(len(id_to_line)):
+    #    print i,id_to_line[i]
+    # exit()
+    '''
+    start_name = raw_input("起始站: ")
+    # start_name = "人民大学"
+    while start_name not in name_to_id:
+        print "起始站不存在，请重新输入"
+        start_name = raw_input("起始站: ")
+
+    end_name = raw_input("终点站: ")
+    # end_name = "北京站"
+    while end_name not in name_to_id:
+        print "终点站不存在，请重新输入"
+        end_name = raw_input("终点站: ")
+    '''
+
+    #print "----------最短距离----------"
+    return dijkstra(start_name, end_name, 2)
+
+def get_least_trans(start_name,end_name):
+    create_map()
+    # for i in range(len(id_to_line)):
+    #    print i,id_to_line[i]
+    # exit()
+    '''
+    start_name = raw_input("起始站: ")
+    # start_name = "人民大学"
+    while start_name not in name_to_id:
+        print "起始站不存在，请重新输入"
+        start_name = raw_input("起始站: ")
+
+    end_name = raw_input("终点站: ")
+    # end_name = "北京站"
+    while end_name not in name_to_id:
+        print "终点站不存在，请重新输入"
+        end_name = raw_input("终点站: ")
+    '''
+
+    #print "----------最短距离----------"
+    return  dijkstra(start_name, end_name, 3)
 
