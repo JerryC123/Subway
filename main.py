@@ -1,6 +1,7 @@
 #-*- encoding=utf-8 -*-
 
 import os
+import json
 
 Subway_Map = {}
 name_to_id = {}
@@ -48,7 +49,6 @@ def dijkstra(start_name, end_name, flag):
         parents[i] = start
 
     node = dij_findnode(cost, visited)
-
     while node is not None:
         for i in Subway_Map[node]:  # 所有node结点的邻居结点
             if flag == 1:
@@ -56,17 +56,20 @@ def dijkstra(start_name, end_name, flag):
             elif flag == 2:
                 newcost = cost[node] + 1
             else:
-                if parents[node] is not None and set(id_to_line[parents[node]]).intersection(set(id_to_line[i])):
-                    newcost = cost[node] + 1
+                if parents[node] is not None:
+                    a = list(set(id_to_line[parents[node]]).intersection(set(id_to_line[node])))
+                    b = list(set(id_to_line[node]).intersection(set(id_to_line[i])))
+                    if a != b:
+                        newcost = cost[node] + 99
+                    else:
+                        newcost = cost[node] + 1
                 else:
-                    newcost = cost[node] + 999
-
+                    newcost = cost[node] + 1
             if newcost < cost[i]:
                 parents[i] = node
                 cost[i] = newcost
         visited.append(node)
         node = dij_findnode(cost, visited)
-
     end = name_to_id[end_name]
 
     path = get_path(parents, start, end)
@@ -97,7 +100,7 @@ def create_data(path):
                 line_union = set(id_to_line[path[i - 1]]).intersection(set(id_to_line[path[i]]))
                 line_name.append(list(line_union)[0])
 
-    trans_num = len(set(line_name))
+    trans_num = len(set(line_name)) - 1
 
     route = []
     start = 0
@@ -108,7 +111,7 @@ def create_data(path):
             route_data = {}
             route_data['line'] = line_name[i - 1]
             route_data['start'] = path_name[start]
-            route_data['station'] = path_name[start:end + 1]
+            route_data['station'] = path_name[start + 1:end]
             route_data['end'] = path_name[end]
             route.append(route_data)
             start = end
@@ -125,7 +128,7 @@ def create_data(path):
     data['station_num'] = station_num
     data['trans_num'] = trans_num
     data['total_distance'] = total_distance
-    print data
+    print(data)
     return data
 
 def create_map():
@@ -209,21 +212,21 @@ if __name__ == '__main__':
     start_name = raw_input("起始站: ")
     #start_name = "人民大学"
     while start_name not in name_to_id:
-        print "起始站不存在，请重新输入"
+        #print "起始站不存在，请重新输入"
         start_name = raw_input("起始站: ")
 
     end_name = raw_input("终点站: ")
     #end_name = "北京站"
     while end_name not in name_to_id:
-        print "终点站不存在，请重新输入"
+        #print "终点站不存在，请重新输入"
         end_name = raw_input("终点站: ")
 
-    print "----------最短距离----------"
+    #print "----------最短距离----------"
     dijkstra(start_name, end_name, 1)
-    print ""
-    print "----------最少站点----------"
+    # ""
+    #print "----------最少站点----------"
     dijkstra(start_name, end_name, 2)
-    print ""
-    print "----------最少换乘----------"
+    #print ""
+    #print "----------最少换乘----------"
     dijkstra(start_name, end_name, 3)
 
