@@ -5,11 +5,8 @@ Subway_Map = {}
 name_to_id = {}
 id_to_name = {}
 id_to_line = {}
-cost = {}
-parents = {}
-visited = []
 
-def dij_findnode(cost):
+def dij_findnode(cost, visited):
     minDist = 99999
     node = None
     for i in Subway_Map.keys():
@@ -18,39 +15,48 @@ def dij_findnode(cost):
             node = i
     return node
 
-def print_path(start, end):
+def print_path(parents, start, end):
     if end == start:
         print id_to_name[start]
     else:
-        print_path(start, parents[end])
+        print_path(parents, start, parents[end])
         print id_to_name[end]
 
-def dijkstra():
-    start_name = raw_input("start:")
+def dijkstra(start_name, end_name, flag):
+    cost = {}
+    parents = {}
+    visited = []
+
     start = name_to_id[start_name]
     visited.append(start)
     station_num = len(Subway_Map)
     for i in range(station_num):
         cost[i] = 99999
     for i in Subway_Map[int(start)].keys():
-        cost[i] = Subway_Map[start][i]
+        if(flag == True):
+            cost[i] = Subway_Map[start][i]
+        else:
+            cost[i] = 1
         parents[i] = start
 
-    node = dij_findnode(cost)
+    node = dij_findnode(cost, visited)
 
     while node is not None:
         for i in Subway_Map[node]:  # 所有node结点的邻居结点
-            newcost = cost[node] + Subway_Map[node][i]
+            if flag == True:
+                newcost = cost[node] + Subway_Map[node][i]
+            else:
+                newcost = cost[node] + 1
+
             if newcost < cost[i]:
                 parents[i] = node
                 cost[i] = newcost
         visited.append(node)
-        node = dij_findnode(cost)
+        node = dij_findnode(cost, visited)
 
-    end_name = raw_input("end:")
     end = name_to_id[end_name]
 
-    print_path(start, end)
+    print_path(parents, start, end)
 
 
 def create_map():
@@ -115,6 +121,11 @@ def create_map():
     '''
 
 if __name__ == '__main__':
+    start_name = raw_input("起始站: ")
+    end_name = raw_input("终点站: ")
     create_map()
-    dijkstra()
-    
+    print "----------少时间----------"
+    dijkstra(start_name, end_name, True)
+    print ""
+    print "----------少站点----------"
+    dijkstra(start_name, end_name, False)
