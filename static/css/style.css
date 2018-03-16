@@ -103,7 +103,6 @@ html, body {
   }
   .station_end_name{
       color:#000000;
-      margin-right:5px;
   }
   .station_start_name{
       color:#000000;
@@ -114,7 +113,7 @@ html, body {
       margin-right:0px;
   }
   .total_num{
-      margin-left:80%;
+      /*margin-left:75%;*/
       color:#1fbbf2
   }
   .solution_detail{

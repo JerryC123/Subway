@@ -33,19 +33,22 @@ def get_result(request):
                'total_distance':2000,
     }
     '''
+    try:
 
-    context['gsd'] = get_shortest_distance(p_from,p_to)
-    for route in context['gsd']['route']:
-        route['color'] = color_dict[route['line']]
+        context['gsd'] = get_shortest_distance(p_from,p_to)
+        for route in context['gsd']['route']:
+            route['color'] = color_dict[route['line']]
 
-    context['gls'] = get_least_station(p_from,p_to)
-    for route in context['gls']['route']:
-        route['color'] = color_dict[route['line']]
+        context['gls'] = get_least_station(p_from,p_to)
+        for route in context['gls']['route']:
+            route['color'] = color_dict[route['line']]
 
-    context['glt'] = get_least_trans(p_from,p_to)
-    for route in context['glt']['route']:
-        route['color'] = color_dict[route['line']]
-    context['status'] = 1
+        context['glt'] = get_least_trans(p_from,p_to)
+        for route in context['glt']['route']:
+            route['color'] = color_dict[route['line']]
+        context['status'] = 1
+    except:
+        context['status'] = 0
     resp = HttpResponse(json.dumps(context), content_type="application/json")
     return resp
 
