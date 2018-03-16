@@ -122,3 +122,6 @@ html, body {
   .tab_a:hover{
       cursor:pointer;
   }
+  .btn-submit{
+      width:100%;
+  }
