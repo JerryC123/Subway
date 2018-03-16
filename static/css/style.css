@@ -51,8 +51,10 @@ html, body {
       /*border: 1px #4e667d solid; *//* 边框 */  
       color: #000000; /* 文字颜色 */  
       display: block; /* 此元素将显示为块级元素，此元素前后会带有换行符 */  
-      line-height: 1.35em; /* 行高 */  
-      padding: 4px 20px; /* 内部填充的距离 */  
+      line-height: 1.35em; /* 行高 */
+      padding-top:4px;
+      padding-bottom:4px;
+      /*padding: 4px 20px;*/ /* 内部填充的距离 */
       text-decoration: none; /* 不显示超链接下划线 */  
       white-space: nowrap; /* 对于文本内的空白处，不会换行，文本会在在同一行上继续，直到遇到 <br> 标签为止。 */
       border-bottom: 1px #cdcaca solid;  
