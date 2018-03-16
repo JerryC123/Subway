@@ -5,12 +5,14 @@ from django.shortcuts import render
 import json
 from django.http import HttpResponse
 from index import *
+from django.views.decorators.csrf import csrf_exempt
 
 
 def index(request):
     context = {}
     return render(request, 'index.html', context)
 
+@csrf_exempt
 def get_result(request):
     context = {}
     color_dict = {'地铁一号线': '#fbebea', '地铁二号线': '#e6eff6', '地铁四号线': '#dff5f2', '地铁十号线': '#e3f3f6',
@@ -43,7 +45,7 @@ def get_result(request):
     context['glt'] = get_least_trans(p_from,p_to)
     for route in context['glt']['route']:
         route['color'] = color_dict[route['line']]
-
+    context['status'] = 1
     resp = HttpResponse(json.dumps(context), content_type="application/json")
     return resp
 

@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/dev/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/dev/ref/settings/
 """
-
+import os
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -25,8 +25,8 @@ SECRET_KEY = 'h)whgar$o#hb!c#e7ticux0zo(5)9ejzqi&a!o6&!(5ttgtwh$'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+#ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*',]
 
 # Application definition
 

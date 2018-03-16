@@ -99,7 +99,7 @@ def create_data(path):
                 line_union = set(id_to_line[path[i - 1]]).intersection(set(id_to_line[path[i]]))
                 line_name.append(list(line_union)[0])
 
-    trans_num = len(set(line_name))
+    trans_num = len(set(line_name))-1
 
     route = []
     start = 0
@@ -110,17 +110,19 @@ def create_data(path):
             route_data = {}
             route_data['line'] = line_name[i - 1]
             route_data['start'] = path_name[start]
-            route_data['station'] = path_name[start:end + 1]
+            route_data['station'] = path_name[start+1:end]
             route_data['end'] = path_name[end]
+            route_data['station_num'] = end - start
             route.append(route_data)
             start = end
-
+    
     end = station_num
     route_data = {}
     route_data['line'] = line_name[end - 1]
     route_data['start'] = path_name[start]
-    route_data['station'] = path_name[start:]
+    route_data['station'] = path_name[start+1:-1]
     route_data['end'] = path_name[end - 1]
+    route_data['station_num'] =  end -start-1
     route.append(route_data)
 
     data['route'] = route
